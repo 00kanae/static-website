@@ -1,1 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>NightShift | Student Reset Room</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="nav-wrapper">
+
+            <a href="#home" class="brand">
+                <span class="brand-dot"></span>
+                NightShift
+            </a>
+
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#reset">Reset Zone</a>
+                <a href="#focus">Focus</a>
+                <a href="#about">About</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- HOME -->
+        <section id="home" class="hero section-container">
+
+            <div class="hero-text">
+
+                <p class="eyebrow">DIGITAL RESET ROOM</p>
+
+                <h1>
+                    Pause the noise.
+                    <span>Reset your focus.</span>
+                </h1>
+
+                <p class="hero-description">
+                    NightShift is a small digital space for students who need
+                    a moment to breathe, reorganize their thoughts, and return
+                    to their next task with a clearer mind.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#reset" class="primary-button">
+                        Enter Reset Zone
+                    </a>
+
+                    <a href="#focus" class="secondary-button">
+                        Start Focus Session
+                    </a>
+                </div>
+
+            </div>
+
+
+            <div class="clock-card">
+
+                <p class="card-label">LOCAL TIME</p>
+
+                <div id="liveClock" class="clock">
+                    00:00:00
+                </div>
+
+                <p id="dateDisplay" class="date-text">
+                    Loading date...
+                </p>
+
+                <div class="clock-line"></div>
+
+                <p class="clock-note">
+                    Your next minute starts here.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESET ZONE -->
+        <section id="reset" class="section-container">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">01 / RESET ZONE</p>
+
+                <h2>
+                    Give your brain
+                    <span>some breathing room.</span>
+                </h2>
+
+                <p>
+                    Choose a quick reset whenever your attention starts
+                    wandering.
+                </p>
+
+            </div>
+
+
+            <div class="reset-grid">
+
+                <article class="reset-card featured-card">
+
+                    <div class="icon-box">↻</div>
+
+                    <h3>One-Minute Reset</h3>
+
+                    <p id="resetMessage">
+                        Clear one small part of your workspace before
+                        continuing.
+                    </p>
+
+                    <button id="resetButton" class="action-button">
+                        Give Me a Reset
+                    </button>
+
+                    <p id="resetCounter" class="counter">
+                        Resets completed: 0
+                    </p>
+
+                </article>
+
+
+                <article class="reset-card">
+
+                    <div class="icon-box">◌</div>
+
+                    <h3>Simple Rule</h3>
+
+                    <p>
+                        Don't try to finish everything at once. Pick one
+                        task, give it your attention, then move to the next.
+                    </p>
+
+                </article>
+
+
+                <article class="reset-card">
+
+                    <div class="icon-box">✦</div>
+
+                    <h3>Small Wins</h3>
+
+                    <ul>
+                        <li>Put one thing back in place.</li>
+                        <li>Close an unused tab.</li>
+                        <li>Write down the next task.</li>
+                        <li>Take a short screen break.</li>
+                    </ul>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOCUS SECTION -->
+        <section id="focus" class="focus-section">
+
+            <div class="section-container focus-layout">
+
+                <div>
+
+                    <p class="eyebrow">02 / FOCUS SESSION</p>
+
+                    <h2>
+                        Twenty-five minutes.
+                        <span>One task.</span>
+                    </h2>
+
+                    <p>
+                        Use the timer as a simple visual boundary for a
+                        focused study session.
+                    </p>
+
+                    <button id="startFocus" class="primary-button">
+                        Start Focus Timer
+                    </button>
+
+                    <button id="resetFocus" class="secondary-button">
+                        Reset Timer
+                    </button>
+
+                </div>
+
+
+                <div class="countdown-card">
+
+                    <p class="card-label">FOCUS COUNTDOWN</p>
+
+                    <div class="timer-grid">
+
+                        <div>
+                            <strong id="days">00</strong>
+                            <span>DAYS</span>
+                        </div>
+
+                        <div>
+                            <strong id="hours">00</strong>
+                            <span>HOURS</span>
+                        </div>
+
+                        <div>
+                            <strong id="minutes">25</strong>
+                            <span>MINUTES</span>
+                        </div>
+
+                        <div>
+                            <strong id="seconds">00</strong>
+                            <span>SECONDS</span>
+                        </div>
+
+                    </div>
+
+                    <p id="timerStatus" class="timer-status">
+                        Ready when you are.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DAILY CHECK-IN -->
+        <section class="section-container checkin-section">
+
+            <div class="checkin-card">
+
+                <div>
+
+                    <p class="eyebrow">03 / DAILY CHECK-IN</p>
+
+                    <h2>
+                        What should you do
+                        <span>next?</span>
+                    </h2>
+
+                    <p id="checkinMessage">
+                        Your next step does not have to be complicated.
+                    </p>
+
+                </div>
+
+                <button id="checkinButton" class="action-button">
+                    Check In
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+        <section id="about" class="section-container about-section">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">04 / ABOUT NIGHTSHIFT</p>
+
+                <h2>
+                    A quieter corner
+                    <span>of the internet.</span>
+                </h2>
+
+            </div>
+
+            <div class="about-content">
+
+                <p>
+                    NightShift was created as a simple student-focused
+                    webpage that combines useful JavaScript interactions
+                    with a calm visual interface.
+                </p>
+
+                <p>
+                    The goal is not to replace productivity tools. Instead,
+                    it gives students a small place to pause, choose one
+                    action, and return to their work.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <div class="footer-content">
+
+            <div>
+                <strong>NightShift</strong>
+                <p>A student digital reset room.</p>
+            </div>
+
+            <div>
+                <p>
+                    Built with HTML, CSS & JavaScript.
+                </p>
+
+                <a
+                    href="https://github.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Visit GitHub
+                </a>
+            </div>
+
+        </div>
+
+        <p class="copyright">
+            © 2026 NightShift. Created for a static website activity.
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
