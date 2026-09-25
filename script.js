@@ -1,18 +1,9 @@
-// ============================================
-// NIGHTSHIFT JAVASCRIPT
-// ============================================
-
-
-// --------------------------------------------
-// 1. LIVE DIGITAL CLOCK
-// --------------------------------------------
+/* =========================
+   LIVE DIGITAL CLOCK
+========================= */
 
 function updateClock() {
-
     const now = new Date();
-
-    const clock = document.getElementById("liveClock");
-    const dateDisplay = document.getElementById("dateDisplay");
 
     let hours = now.getHours();
     const minutes = String(now.getMinutes()).padStart(2, "0");
@@ -21,244 +12,139 @@ function updateClock() {
     const period = hours >= 12 ? "PM" : "AM";
 
     hours = hours % 12;
-
     if (hours === 0) {
         hours = 12;
     }
-
     hours = String(hours).padStart(2, "0");
 
-    clock.textContent =
-        `${hours}:${minutes}:${seconds} ${period}`;
+    const time = `${hours}:${minutes}:${seconds} ${period}`;
+    document.getElementById("liveClock").textContent = time;
 
     const dateOptions = {
         weekday: "long",
+        year: "numeric",
         month: "long",
-        day: "numeric",
-        year: "numeric"
+        day: "numeric"
     };
 
-    dateDisplay.textContent =
+    document.getElementById("dateDisplay").textContent =
         now.toLocaleDateString("en-US", dateOptions);
 }
 
 updateClock();
-
 setInterval(updateClock, 1000);
 
 
-// --------------------------------------------
-// 2. FOCUS COUNTDOWN TIMER
-// --------------------------------------------
+/* =========================
+   FOCUS COUNTDOWN
+========================= */
 
 const FOCUS_DURATION = 25 * 60;
 
 let remainingSeconds = FOCUS_DURATION;
+let focusInterval = null;
 
-let countdownInterval = null;
+function updateTimerDisplay() {
+    let remaining = remainingSeconds;
 
-const daysElement = document.getElementById("days");
-const hoursElement = document.getElementById("hours");
-const minutesElement = document.getElementById("minutes");
-const secondsElement = document.getElementById("seconds");
+    const days = Math.floor(remaining / 86400);
+    remaining %= 86400;
 
-const timerStatus = document.getElementById("timerStatus");
+    const hours = Math.floor(remaining / 3600);
+    remaining %= 3600;
 
-const startFocusButton =
-    document.getElementById("startFocus");
+    const minutes = Math.floor(remaining / 60);
+    const seconds = remaining % 60;
 
-const resetFocusButton =
-    document.getElementById("resetFocus");
-
-
-function updateCountdownDisplay() {
-
-    const days = Math.floor(
-        remainingSeconds / 86400
-    );
-
-    const hours = Math.floor(
-        (remainingSeconds % 86400) / 3600
-    );
-
-    const minutes = Math.floor(
-        (remainingSeconds % 3600) / 60
-    );
-
-    const seconds =
-        remainingSeconds % 60;
-
-
-    daysElement.textContent =
-        String(days).padStart(2, "0");
-
-    hoursElement.textContent =
-        String(hours).padStart(2, "0");
-
-    minutesElement.textContent =
-        String(minutes).padStart(2, "0");
-
-    secondsElement.textContent =
-        String(seconds).padStart(2, "0");
+    document.getElementById("days").textContent = String(days).padStart(2, "0");
+    document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+    document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+    document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
 }
 
-
-function startCountdown() {
-
-    if (countdownInterval !== null) {
+function startFocusTimer() {
+    if (focusInterval !== null) {
         return;
     }
 
-    timerStatus.textContent =
-        "Focus session is running...";
+    document.getElementById("timerStatus").textContent = "Focus session is running.";
 
-    countdownInterval = setInterval(() => {
-
-        if (remainingSeconds <= 0) {
-
-            clearInterval(countdownInterval);
-
-            countdownInterval = null;
-
-            timerStatus.textContent =
-                "Session complete. Nice work!";
-
-            return;
+    focusInterval = setInterval(() => {
+        if (remainingSeconds > 0) {
+            remainingSeconds--;
+            updateTimerDisplay();
+        } else {
+            clearInterval(focusInterval);
+            focusInterval = null;
+            document.getElementById("timerStatus").textContent = "Focus session complete. Nice work.";
         }
-
-        remainingSeconds--;
-
-        updateCountdownDisplay();
-
     }, 1000);
 }
 
-
-function resetCountdown() {
-
-    clearInterval(countdownInterval);
-
-    countdownInterval = null;
-
+function resetFocusTimer() {
+    clearInterval(focusInterval);
+    focusInterval = null;
     remainingSeconds = FOCUS_DURATION;
-
-    updateCountdownDisplay();
-
-    timerStatus.textContent =
-        "Timer reset. Ready when you are.";
+    updateTimerDisplay();
+    document.getElementById("timerStatus").textContent = "Timer reset. Ready when you are.";
 }
 
+document.getElementById("startFocus").addEventListener("click", startFocusTimer);
+document.getElementById("resetFocus").addEventListener("click", resetFocusTimer);
 
-startFocusButton.addEventListener(
-    "click",
-    startCountdown
-);
-
-resetFocusButton.addEventListener(
-    "click",
-    resetCountdown
-);
-
-updateCountdownDisplay();
+updateTimerDisplay();
 
 
-// --------------------------------------------
-// 3. INTERACTIVE RESET BUTTON
-// --------------------------------------------
+/* =========================
+   INTERACTIVE RESET BUTTON
+========================= */
 
-const resetSuggestions = [
-
-    "Close one tab that you no longer need.",
-
-    "Write down the single task you want to finish next.",
-
-    "Move your phone away from your immediate workspace.",
-
-    "Take a short stretch before returning to your screen.",
-
-    "Clear one small area around your study space.",
-
-    "Drink some water, then return to your next task.",
-
-    "Look away from the screen for a few seconds and reset your attention."
+const resetIdeas = [
+    "Drink some water and take three slow breaths.",
+    "Stand up and stretch for one minute.",
+    "Put your phone down and look away from the screen.",
+    "Write down the one task you want to finish.",
+    "Clean one small part of your study area.",
+    "Take a short walk before returning to your work.",
+    "Close unnecessary tabs and simplify your workspace."
 ];
-
 
 let resetIndex = 0;
-
 let resetCount = 0;
 
-const resetMessage =
-    document.getElementById("resetMessage");
+document.getElementById("resetButton").addEventListener("click", () => {
+    document.getElementById("resetMessage").textContent = resetIdeas[resetIndex];
 
-const resetCounter =
-    document.getElementById("resetCounter");
-
-const resetButton =
-    document.getElementById("resetButton");
-
-
-resetButton.addEventListener(
-    "click",
-    () => {
-
-        resetMessage.textContent =
-            resetSuggestions[resetIndex];
-
-        resetIndex++;
-
-        if (resetIndex >= resetSuggestions.length) {
-            resetIndex = 0;
-        }
-
-        resetCount++;
-
-        resetCounter.textContent =
-            `Resets completed: ${resetCount}`;
+    resetIndex++;
+    if (resetIndex >= resetIdeas.length) {
+        resetIndex = 0;
     }
-);
+
+    resetCount++;
+    document.getElementById("resetCounter").textContent = resetCount;
+});
 
 
-// --------------------------------------------
-// 4. DAILY CHECK-IN
-// --------------------------------------------
+/* =========================
+   DAILY CHECK-IN
+========================= */
 
-const checkinMessages = [
-
-    "Choose one task and give it your full attention.",
-
-    "Start with the easiest unfinished task.",
-
-    "Remove one distraction before you begin.",
-
-    "Spend five minutes organizing what needs to be done.",
-
-    "Finish something small before opening another task.",
-
-    "Take a breath. You can work through this one step at a time."
+const checkInMessages = [
+    "You don't need to have everything figured out.",
+    "Start with one small task.",
+    "A slow start is still a start.",
+    "Give yourself a moment before continuing.",
+    "Focus on what you can do next.",
+    "You made it here. Now take the next step."
 ];
 
+let checkInIndex = 0;
 
-let checkinIndex = 0;
-
-const checkinButton =
-    document.getElementById("checkinButton");
-
-const checkinMessage =
-    document.getElementById("checkinMessage");
-
-
-checkinButton.addEventListener(
-    "click",
-    () => {
-
-        checkinMessage.textContent =
-            checkinMessages[checkinIndex];
-
-        checkinIndex++;
-
-        if (checkinIndex >= checkinMessages.length) {
-            checkinIndex = 0;
-        }
+document.getElementById("checkinButton").addEventListener("click", () => {
+    checkInIndex++;
+    if (checkInIndex >= checkInMessages.length) {
+        checkInIndex = 0;
     }
-);
+
+    document.getElementById("checkinMessage").textContent = checkInMessages[checkInIndex];
+});
